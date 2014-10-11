@@ -1,0 +1,32 @@
+# Welcome to Sonic Pi v2.0
+
+in_thread do
+  with_fx :lpf, cutoff: 60 do
+    with_fx :reverb, mix: 0.5 do
+      with_fx :compressor, amp: 40 do
+        with_fx :distortion, distort: 0.4 do
+          with_fx :echo do
+            loop do
+              sample :ambi_drone, rate: 1
+              sleep sample_duration :ambi_drone, rate: 1.35
+              sample :drum_heavy_kick, rate: 1
+              sleep sample_duration :drum_heavy_kick, rate: 1.35
+              sample :perc_bell, rate: 1.35
+              sleep sample_duration :perc_bell, rate: 1.35
+            end
+          end
+        end
+      end
+    end
+  end
+end
+
+in_thread do
+  loop do
+    play 65, rate: 1.5
+    sleep 0.5
+    sample :drum_heavy_kick, rate: 1
+    sleep 0.5
+  end
+end
+

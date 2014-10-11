@@ -1,0 +1,40 @@
+in_thread do
+  define :my_loop do
+    define :my_loop do
+      use_synth :tb303
+      sample :drum_bass_hard, rate: rrand(0.5, 2)
+  play choose(chord(:e3, :minor)), release: 0.2, cutoff: rrand(60, 130)
+  sleep 0.5
+    end
+  end
+end
+
+in_thread(name: :looper) do
+  loop do
+    my_loop
+  end
+end
+use_synth :fm
+in_thread do
+  loop do
+    p = play chord(:Eb3, :minor).choose - [0, 12, -12].choose, divisor: 0.01, div_slide: rrand(0, 100), depth: rrand(0.001, 2), attack: 0.01, release: rrand(0, 5), amp: 0.5
+    control p, divisor: rrand(0.001, 50)
+    sleep [0.5, 1, 2].choose
+  end
+end
+in_thread do
+  with_fx :reverb, mix: 0.5 do
+    loop do
+      s = synth [:tb303, :fm, :dsaw].choose, amp: rrand(0.5, 1.5), attack: rrand(0, 4), sustain: rrand(0, 2), release: rrand(0, 5), cutoff_slide: rrand(0, 5), cutoff: rrand(60, 100), pan: rrand(-1, 1), pan_slide: 1, amp: rrand(0.5, 1)
+      control s, pan: rrand(-1, 1), cutoff: rrand(60, 70)
+      sleep rrand(2, 4)
+    end
+  end
+end
+in_thread do
+loop do
+sleep 1
+sample :drum_heavy_kick, sustain: 1, attack: 0.3, release: 0.4, amp: 5
+sleep 0.5
+end
+end

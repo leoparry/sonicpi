@@ -1,0 +1,12 @@
+# Welcome to Sonic Pi v2.0
+4.times do
+play 65
+sleep 1
+end
+
+use_synth :tri_s
+play 50, sustain: 2
+sleep 2
+play 48, sustain: 2
+sleep 2
+play 45, sustain: 2
